@@ -30,14 +30,14 @@ Utilizaremos cfdisk para particionar el disco. En una máquina virtual, sigue es
 ## 3. Validación de particiones
 Verifica que las particiones se hayan creado correctamente con el comando:
 
-'''bash
+```bash
 lsblk
-'''
+```
 
 ## 4. Formateo de particiones
 Formatea las particiones con los siguientes comandos:
 
-'''bash 
+``` bash
 # Formatear la partición boot
 mkfs.vfat -F 32 /dev/sda1
 
@@ -47,11 +47,11 @@ mkfs.ext4 /dev/sda2
 # Formatear la partición swap
 mkswap /dev/sda3
 swapon /dev/sda3
-'''
+```
 ## 5. Montaje de particiones
 Monta las particiones formateadas:
 
-''' bash
+``` bash
 # Montar la partición root en /mnt
 mount /dev/sda2 /mnt
 
@@ -59,156 +59,156 @@ mount /dev/sda2 /mnt
 mkdir /mnt/boot
 moun
 t /dev/sda1 /mnt/boot
-''' 
+``` 
 
 ## 6. Instalación de paquetes del sistema
 Instala los paquetes básicos del sistema:
 
-'''bash
+```bash
 pacstrap -i /mnt base base-devel linux linux-firmware git nano networkmanager grub
-'''
+```
 En caso de errores, puedes usar:
 
-'''bash
+```bash
 pacman -Sy && pacman -S archlinux-keyring
-'''
+```
 
 7. Generación del archivo fstab
 Genera el archivo fstab con el siguiente comando:
 
-'''bash
+```bash
 genfstab -U /mnt >> /mnt/etc/fstab
-'''
+```
 
 ## 8. Acceso al nuevo sistema
 Ingresa al nuevo sistema con arch-chroot:
 
-'''bash
+```bash
 arch-chroot /mnt
-'''
+```
 
 9. Contraseña de root
 Asigna una contraseña al usuario root:
 
-'''bash 
+```bash 
 passwd
-''' 
+``` 
 
 ## 10. Creación de un usuario
 Crea un usuario con el nombre que desees:
 
-'''bash
+```bash
 useradd -m nombre_de_usuario
-'''
+```
 
 ## 11. Configuración de zona horaria
 Establece la zona horaria de acuerdo a tu ubicación:
 
-'''bash
+```bash
 ln -sf /usr/share/zoneinfo/(Region)/(Ciudad) /etc/localtime
-'''
+```
 
 ## 12. Actualización del reloj del sistema
 Actualiza el reloj del sistema:
 
-'''bash
+```bash
 hwclock --systohc
-'''
+```
 
 ## 13. Configuración del idioma
 Edita el archivo locale.gen para configurar el idioma:
 
-'''bash
+```bash
 nano /etc/locale.gen
-'''
+```
 
 Descomenta las líneas correspondientes a tu idioma (por ejemplo, en_US y es_ES). Luego, ejecuta:
 
-'''bash 
+```bash 
 locale-gen
-''' 
+``` 
 
 ## 14. Configuración del teclado
 Si deseas mantener el mismo layout de teclado en cada inicio de sesión, crea o edita el archivo vconsole.conf:
 
-'''bash 
+```bash 
 echo "KEYMAP=es" > /etc/vconsole.conf
-''' 
+``` 
 
 ## 15. Nombre del host
 Cambia el nombre de tu host:
 
-'''bash
+```bash
 echo "nombre_de_tu_equipo" > /etc/hostname
-'''
+```
 
 ## 16. Configuración del archivo /etc/hosts
 Edita el archivo /etc/hosts y agrega las siguientes líneas:
 
-'''bash
+```bash
 127.0.0.1 	localhost
 ::1		localhost
 127.0.0.1	(nombre_de_tu_equipo).localhost (nombre_de_tu_equipo)
-'''
+```
 ## 17. Generación de imágenes del sistema
 Genera las imágenes del sistema con:
 
-'''bash 
+```bash 
 mkinitcpio -P
-'''
+```
 
 ## 18. Instalación de GRUB
 Instala el gestor de arranque GRUB:
 
-'''bash
+```bash
 grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
-'''
+```
 
 ## 19. Reinicio del sistema
 Reinicia el sistema:
 
-'''bash 
+```bash 
 reboot now
-'''
+```
 
 ## 20. Agregar usuario a grupo "wheel"
 Una vez que hayas reiniciado, agrega tu usuario al grupo "wheel" y descomenta la línea correspondiente en el archivo /etc/sudoers:
 
-'''bash 
+```bash 
 usermod -aG wheel nombre_de_usuario
-''' 
+``` 
 
 ## 21. Configuración de la red
 Para activar los servicios de red sin reiniciar, ejecuta los siguientes comandos:
 
-'''bash
+```bash
 systemctl enable NetworkManager
 systemctl start NetworkManager
-''' 
+``` 
 
 ## 22. Instalación de entorno gráfico y otras herramientas
 Instala el entorno gráfico y otras herramientas según tus preferencias:
 
-'''bash
+```bash
 pacman -S xorg xorg-server gnome kitty sudo
-'''
+```
 
 ## 23. Habilitar GDM (Gnome Display Manager)
 Para iniciar en la interfaz gráfica de Gnome al arrancar, utiliza el siguiente comando:
 
-'''bash 
+```bash 
 systemctl enable gdm
-'''
+```
 
 ## 24. Configuración adicional para VMware (opcional)
 Si estás utilizando VMware, instala los paquetes necesarios para la interfaz gráfica:
 
-'''bash 
+```bash 
 pacman -S gtkmm open-vm-tools xf86-video-vmware xf86-input-vmmouse
 systemctl enable vmtoolsd
 reinicia la máquina con `reboot now`
-''' 
+``` 
 
 ### ¡Listo! Has instalado Arch Linux y configurado tu sistema base.
 ### Es recomendable crear un snapshot de la máquina base antes de personalizarla para poder volver a un estado inicial estable si algo sale
@@ -219,27 +219,27 @@ Para instalar herramientas de BlackArch en tu sistema de Arch Linux, sigue estos
 
 Copia el script de instalación:
 
-'''bash 
+```bash 
 curl -O https://blackarch.org/strap.sh
-'''
+```
 
 Concede permisos de ejecución al script:
 
-'''bash 
+```bash 
 chmod +x strap.sh
-''' 
+``` 
 
 Ejecuta el script de instalación con sudo:
 
-'''bash 
+```bash 
 sudo ./strap.sh
-''' 
+``` 
 
 Esto instalará el repositorio de BlackArch en tu sistema. Luego, puedes usar sudo pacman -S para instalar herramientas específicas, por ejemplo:
 
-'''bash 
+```bash 
 sudo pacman -S metasploit
-''' 
+``` 
 
 Este proceso es válido para cualquier otra herramienta que desees instalar.
 
