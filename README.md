@@ -2,8 +2,6 @@
 
 En esta guía, te proporcionaremos instrucciones paso a paso sobre cómo instalar Arch Linux desde cero en VMware, utilizando el archivo .iso. Luego, configuraremos una interfaz gráfica Gnome y te mostraremos cómo instalar las dependencias y herramientas de BlackArch.
 
-Un agradecimiento especial a [L4nder](https://lander4k.github.io/) por su apoyo.
-
 ## Instalación de Arch Linux
 
 Comenzaremos con la instalación de Arch Linux.
